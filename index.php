@@ -25,3 +25,7 @@ $context = context_system::instance();
 $PAGE->set_context($context);
 $PAGE->set_url(new moodle_url('/local/greetings/index.php'));
 $PAGE->set_pagelayout('standard');
+
+echo $OUTPUT->header();
+
+echo $OUTPUT->footer();
