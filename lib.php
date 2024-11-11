@@ -15,13 +15,19 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Plugin version and other meta-data are defined here.
+ * Library of functions for local_greetings
  *
  * @package     local_greetings
  * @copyright   2024 Julian Londoño <julian.londono.9704@gmail.com>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+/**
+ * Get a localised greeting message for a user
+ *
+ * @param \stdClass $user
+ * @return string
+ */
 function local_greetings_get_greeting($user) {
 
     if ($user == null) {
