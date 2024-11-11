@@ -12,9 +12,11 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <https://www.gnu.org/licenses/>;.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
+ * Plugin version and other meta-data are defined here.
+ * 
  * @package     local_greetings
  * @copyright   2024 Julian Londoño <julian.londono.9704@gmail.com>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
