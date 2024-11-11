@@ -16,6 +16,7 @@
 
 /**
  * Plugin version and other meta-data are defined here.
+ *
  * @package     local_greetings
  * @copyright   2024 Julian Londoño <julian.londono.9704@gmail.com>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
