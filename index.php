@@ -30,4 +30,10 @@ $PAGE->set_heading(get_string('pluginname', 'local_greetings'));
 
 echo $OUTPUT->header();
 
+if (isloggedin()) {
+    echo '<h3>Greetings, ' . fullname($USER) . '</h3>';
+} else {
+    echo '<h3>Greetings, user</h3>';
+}
+
 echo $OUTPUT->footer();
