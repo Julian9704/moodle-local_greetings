@@ -22,7 +22,7 @@
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
- function local_greetings_get_greeting($user) {
+function local_greetings_get_greeting($user) {
 
     if ($user == null) {
         return get_string('greetinguser', 'local_greetings');
@@ -32,6 +32,15 @@
     switch ($country) {
         case 'ES':
             $langstr = 'greetinguseres';
+            break;
+        case 'AU':
+            $langstr = 'greetinguserau';
+            break;
+        case 'FJ':
+            $langstr = 'greetinguserfj';
+            break;
+        case 'NZ':
+            $langstr = 'greetingusernz';
             break;
         default:
             $langstr = 'greetingloggedinuser';
