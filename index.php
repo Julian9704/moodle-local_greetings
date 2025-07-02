@@ -30,6 +30,12 @@ $PAGE->set_pagelayout('standard');
 $PAGE->set_title(get_string('pluginname', 'local_greetings'));
 $PAGE->set_heading(get_string('pluginname', 'local_greetings'));
 
+require_login();
+
+if (isguestuser()) {
+    throw new moodle_exception('noguest');
+}
+
 echo $OUTPUT->header();
 
 if (isloggedin()) {
