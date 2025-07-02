@@ -23,6 +23,7 @@
 
 require_once('../../config.php');
 require_once($CFG->dirroot. '/local/greetings/lib.php');
+
 $context = context_system::instance();
 $PAGE->set_context($context);
 $PAGE->set_url(new moodle_url('/local/greetings/index.php'));
@@ -31,6 +32,9 @@ $PAGE->set_title(get_string('pluginname', 'local_greetings'));
 $PAGE->set_heading(get_string('pluginname', 'local_greetings'));
 
 require_login();
+$allowpost = has_capability('local/greetings:postmessages', $context);
+
+$messageform = new \local_greetings\form\message_form();
 
 if (isguestuser()) {
     throw new moodle_exception('noguest');
@@ -43,5 +47,15 @@ if (isloggedin()) {
 } else {
     echo get_string('greetinguser', 'local_greetings');
 }
+
+
+$messageform->display();
+
+if ($data = $messageform->get_data()) {
+    $message = required_param('message', PARAM_TEXT);
+
+    echo $OUTPUT->heading($message, 4);
+}
+
 
 echo $OUTPUT->footer();
