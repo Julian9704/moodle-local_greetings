@@ -39,4 +39,11 @@ $capabilities = [
             'user' => CAP_ALLOW,
         ],
     ],
+    'local/greetings:deleteanymessage' => [
+        'captype' => 'delete',
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => [
+            'user' => CAP_ALLOW,
+        ],
+    ],
 ];
