@@ -21,6 +21,8 @@
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use core\message\message;
+
 require_once('../../config.php');
 require_once($CFG->dirroot. '/local/greetings/lib.php');
 
@@ -40,16 +42,26 @@ if (isguestuser()) {
 $allowpost = has_capability('local/greetings:postmessages', $context);
 $deleteanypost = has_capability('local/greetings:deleteanymessage', $context);
 $allowread = has_capability('local/greetings:viewmessages', $context);
+$deleteownpost = has_capability('local/greetings:deleteownmessage', $context);
 
 $messageform = new \local_greetings\form\message_form();
-
 $action = optional_param('action', '', PARAM_TEXT);
 
-if ($action == 'del') {
+if ($action == 'del' || $action == 'delown') {
     $id = required_param('id', PARAM_INT);
+    var_dump($id);
 
     if ($deleteanypost) {
         $DB->delete_records('local_greetings_messages', ['id' => $id]);
+    }
+
+    if ($deleteownpost) {
+        $userid = $USER->id;
+        $message = $DB->get_record('local_greetings_messages', ['id' => $id]);
+
+        if ($USER->id == $message->userid) {
+            $DB->delete_records('local_greetings_messages', ['id' => $id]);
+        }
     }
 }
 
@@ -64,6 +76,7 @@ if ($data = $messageform->get_data()) {
         $record->userid = $USER->id;
 
         $DB->insert_record('local_greetings_messages', $record);
+        redirect($PAGE->url);
     }
 }
 
@@ -91,6 +104,7 @@ if ($allowread) {
     $templatedata = [
         'messages' => array_values($messages),
         'candeleteany' => $deleteanypost,
+        'candeleteown' => $deleteownpost,
     ];
     echo $OUTPUT->render_from_template('local_greetings/messages', $templatedata);
 }
