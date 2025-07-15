@@ -36,6 +36,19 @@ $allowpost = has_capability('local/greetings:postmessages', $context);
 
 $messageform = new \local_greetings\form\message_form();
 
+if ($data = $messageform->get_data()) {
+    $message = required_param('message', PARAM_TEXT);
+
+    if (!empty($message)) {
+        $record = new stdClass;
+        $record->message = $message;
+        $record->timecreated = time();
+        $record->userid = $USER->id;
+
+        $DB->insert_record('local_greetings_messages', $record);
+    }
+}
+
 if (isguestuser()) {
     throw new moodle_exception('noguest');
 }
@@ -48,14 +61,18 @@ if (isloggedin()) {
     echo get_string('greetinguser', 'local_greetings');
 }
 
-
 $messageform->display();
+$userfields = \core_user\fields::for_name()->with_identity($context);
+$userfieldssql = $userfields->get_sql('u');
 
-if ($data = $messageform->get_data()) {
-    $message = required_param('message', PARAM_TEXT);
+$sql = "SELECT m.id, m.message, m.timecreated, m.userid {$userfieldssql->selects}
+          FROM {local_greetings_messages} m
+     LEFT JOIN {user} u ON u.id = m.userid
+      ORDER BY timecreated DESC";
 
-    echo $OUTPUT->heading($message, 4);
-}
+$messages = $DB->get_records_sql($sql);
 
+$templatedata = ['messages' => array_values($messages)];
+echo $OUTPUT->render_from_template('local_greetings/messages', $templatedata);
 
 echo $OUTPUT->footer();

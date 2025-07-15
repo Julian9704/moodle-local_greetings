@@ -40,5 +40,5 @@ class message_form extends \moodleform {
         $mform->setType('message', PARAM_TEXT);
         $submitlabel = get_string('submit');
         $mform->addElement('submit', 'submitmessage', $submitlabel);
-    }   
+    }
 }
